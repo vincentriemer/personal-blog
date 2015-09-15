@@ -1,6 +1,6 @@
 FROM node:4.0
 
-RUN npm install -g babel knex
+RUN npm install -g babel knex forever@v0.14.2
 
 WORKDIR /usr/src/app
 
@@ -10,5 +10,6 @@ RUN npm install
 COPY ./src /usr/src/app/src
 COPY ./knexfile.js /usr/src/app/knexfile.js
 COPY ./migrations /usr/src/app/migrations
+COPY ./.foreverignore /usr/src/app/.foreverignore
 
-CMD ["npm", "start"]
+CMD knex migrate:latest && npm start

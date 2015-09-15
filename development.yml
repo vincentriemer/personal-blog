@@ -1,0 +1,21 @@
+db:
+  extends:
+    file: common.yml
+    service: db
+  environment:
+    - DB_NAME=blog_dev
+    - DB_USER=dev
+    - DB_PASS=password
+public-backend:
+  extends:
+    file: common.yml
+    service: public-backend
+  build: ./public-backend
+  command: forever -w ./src/wrapper.js
+  volumes:
+    - ./public-backend/src:/usr/src/app/src
+  environment:
+    - DB_ENV=development
+  priviledged: true
+  links:
+  - db

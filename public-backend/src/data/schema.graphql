@@ -1,0 +1,34 @@
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Post implements Node {
+  id: ID!
+  created_at: String
+  updated_at: String
+  title: String
+  content: String
+  published_at: String
+}
+
+type PostConnection {
+  pageInfo: PageInfo!
+  edges: [PostEdge]
+}
+
+type PostEdge {
+  node: Post
+  cursor: String!
+}
+
+type Query {
+  node(id: ID!): Node
+  posts(before: String, after: String, first: Int, last: Int): PostConnection
+}
