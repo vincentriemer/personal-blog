@@ -25,7 +25,7 @@ import {
   getPost,
   getPosts,
   getTotalPosts,
-  getPostsRemaining,
+  hasPostsRemaining,
 } from './database';
 
 const PREFIX = 'postconnection:';
@@ -131,6 +131,9 @@ function areNodesEqual(p1, p2) {
 async function getPagedPosts(post, args) {
   let {before, after, first, last} = args;
 
+  after = getOffset(after, 0);
+  before = getOffset(before, 0);
+
   let nodes, begin;
   let hasPreviousPage = false;
   let hasNextPage = false;
@@ -139,10 +142,7 @@ async function getPagedPosts(post, args) {
     begin = after;
     nodes = await getPosts(first, after, 'desc');
 
-    let remaining = await getPostsRemaining(after + first + 1, 'desc');
-    if (remaining !== 0) {
-      hasNextPage = true;
-    }
+    hasNextPage = await hasPostsRemaining(after + first, 'desc');
   }
 
   if (last !== null && last !== undefined) {
@@ -154,10 +154,7 @@ async function getPagedPosts(post, args) {
       nodes = newNodes;
     }
 
-    let remaining = await getPostsRemaining(before + last + 1, 'asc');
-    if (remaining !== 0) {
-      hasPreviousPage = true;
-    }
+    hasPreviousPage = await hasPostsRemaining(before + last, 'asc');
   }
 
   if (nodes.length === 0) {
@@ -167,12 +164,13 @@ async function getPagedPosts(post, args) {
   let edges = nodes.map((node, index) => {
     let newPost = new Post();
     Object.assign(newPost, node);
-
+    
     return {
       cursor: offsetToCursor(begin + index),
       node: newPost,
     };
   });
+
 
   return {
     edges: edges,
