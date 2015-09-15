@@ -6,8 +6,8 @@ module.exports = {
     connection: {
       host: 'db',
       database: 'blog_dev',
-      user:     'postgres',
-      password: 'postgres'
+      user:     'dev',
+      password: 'password'
     },
     pool: {
       min: 2,

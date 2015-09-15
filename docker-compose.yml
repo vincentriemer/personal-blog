@@ -1,17 +1,15 @@
 db:
-  image: postgres:9.4
+  image: sameersbn/postgresql
+  environment:
+    - DB_NAME=blog_dev
+    - DB_USER=dev
+    - DB_PASS=password
   ports:
     - "5432:5432"
 server:
-  build: .
-  command: node index.js
+  build: ./public-graphql-server
   environment:
     - DB_ENV=development
-  volumes:
-    - ./src:/usr/src/app/src
-    - ./index.js:/usr/src/app/index.js
-    - ./knexfile.js:/usr/src/app/knexfile.js
-    - ./migrations:/usr/src/app/migrations
   ports:
     - "3000:3000"
   links:
