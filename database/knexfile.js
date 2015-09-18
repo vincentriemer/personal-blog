@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: 'db',
+      host: 'dockerhost',
       database: 'blog_dev',
       user:     'dev',
       password: 'password'

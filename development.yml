@@ -6,6 +6,7 @@ db:
     - DB_NAME=blog_dev
     - DB_USER=dev
     - DB_PASS=password
+
 public-backend:
   extends:
     file: common.yml
@@ -18,4 +19,15 @@ public-backend:
     - DB_ENV=development
   priviledged: true
   links:
-  - db
+    - db
+
+public-frontend:
+  extends:
+    file: common.yml
+    service: public-frontend
+  build: ./public-frontend
+  command: npm run dev-start
+  volumes:
+    - ./public-frontend/js:/usr/src/app/js
+  links:
+    - public-backend

@@ -28,7 +28,11 @@ type PostEdge {
   cursor: String!
 }
 
+type PostsViewer {
+  posts(before: String, after: String, first: Int, last: Int): PostConnection
+}
+
 type Query {
   node(id: ID!): Node
-  posts(before: String, after: String, first: Int, last: Int): PostConnection
+  viewer: PostsViewer
 }

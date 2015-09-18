@@ -46,7 +46,7 @@ let PostModel = bookshelf.Model.extend({
       })
       .count('id')
       .catch(err => { // hack that catches error when count returns with 0 
-        console.warn(err)
+        // console.warn(err)
       })
       .then(count => count !== 0 && count !== undefined);
   },
@@ -62,6 +62,7 @@ let PostModel = bookshelf.Model.extend({
 
 module.exports = {
   Post,
+  PostModel,
   getPost: PostModel.get,
   getPosts: PostModel.list,
   hasPostsRemaining: PostModel.hasRemaining,

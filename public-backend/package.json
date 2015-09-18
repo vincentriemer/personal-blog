@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node ./src/server.js",
     "migrate": "knex migrate:latest",
-    "update-schema": "babel-node ./src/scripts/updateSchema.js"
+    "update-schema": "DB_ENV=graphql-schema babel-node ./src/scripts/updateSchema.js"
   },
   "author": "Vincent Riemer",
   "license": "MIT",

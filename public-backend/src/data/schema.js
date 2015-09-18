@@ -20,13 +20,9 @@ import {
   nodeDefinitions,
 } from 'graphql-relay';
 
-import {
-  Post,
-  getPost,
-  getPosts,
-  getTotalPosts,
-  hasPostsRemaining,
-} from './database';
+if (process.env.DB_ENV !== 'graphql-schema') {
+  var {Post, getPost, getPosts, getTotalPosts, hasPostsRemaining} = require('./database');
+}
 
 const PREFIX = 'postconnection:';
 
@@ -43,11 +39,11 @@ function emptyConnection() {
 }
 
 function offsetToCursor(offset) {
-  return `${PREFIX}${offset}`;
+  return new Buffer(`${PREFIX}${offset}`).toString('base64');
 }
 
 function cursorToOffset(cursor) {
-  return parseInt(cursor.substring(PREFIX.length), 10);
+  return parseInt(new Buffer(cursor, 'base64').toString('ascii').substring(PREFIX.length), 10);
 }
 
 function getOffset(cursor, defaultOffset) {
@@ -164,15 +160,14 @@ async function getPagedPosts(post, args) {
   let edges = nodes.map((node, index) => {
     let newPost = new Post();
     Object.assign(newPost, node);
-    
+
     return {
-      cursor: offsetToCursor(begin + index),
+      cursor: offsetToCursor(begin + index + 1),
       node: newPost,
     };
   });
 
-
-  return {
+  const output = {
     edges: edges,
     pageInfo: {
       startCursor: edges[0].cursor,
@@ -181,17 +176,30 @@ async function getPagedPosts(post, args) {
       hasNextPage: hasNextPage,
     }
   };
+  return output;
 }
 
-var queryType = new GraphQLObjectType({
-  name: 'Query',
+var postsViewerType = new GraphQLObjectType({
+  name: 'PostsViewer',
+  description: 'Wrapper around the posts type',
   fields: () => ({
-    node: nodeField,
     posts: {
       type: postConnection,
       description: 'A list of all the published posts on the blog',
       args: connectionArgs,
       resolve: getPagedPosts,
+    }
+  })
+});
+
+var queryType = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => ({
+    node: nodeField,
+    viewer: {
+      type: postsViewerType,
+      description: 'A list of all the published posts on the blog',
+      resolve: () => postsViewerType
     }
   })
 });
