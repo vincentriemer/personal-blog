@@ -12,11 +12,12 @@ class App extends React.Component {
     }
     return (
         <div>
-          <h1>Blog Post List</h1>
+          <h1>Admin Post List</h1>
+          <Link to="/new">Create Post</Link>
           <ul>
             {this.props.viewer.posts.edges.map(edge =>
               <li key={edge.node.id}>
-                <Link to={`/posts/${edge.node.id}`}>
+                <Link to={`/post/${edge.node.id}`}>
                   {edge.node.title}
                 </Link>
               </li>
@@ -30,10 +31,6 @@ class App extends React.Component {
         </div>
     );
   }
-}
-
-App.contextTypes = {
-  history: React.PropTypes.object.isRequired
 }
 
 export default Relay.createContainer(App, {

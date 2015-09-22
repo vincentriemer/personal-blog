@@ -20,7 +20,7 @@ async () => {
       JSON.stringify(result, null, 2)
     );
     fs.writeFileSync(
-      path.join(__dirname, '../../../public-frontend/schema.json'),
+      path.join(__dirname, '../../../admin-frontend/schema.json'),
       JSON.stringify(result, null, 2)
     );
   }

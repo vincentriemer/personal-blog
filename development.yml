@@ -29,5 +29,34 @@ public-frontend:
   command: npm run dev-start
   volumes:
     - ./public-frontend/js:/usr/src/app/js
+    - ./public-frontend/schema.json:/usr/src/app/schema.json
+    - ./public-frontend/public:/usr/src/app/public
   links:
     - public-backend
+
+admin-backend:
+  extends:
+    file: common.yml
+    service: admin-backend
+  build: ./admin-backend
+  command: forever -w ./src/wrapper.js
+  volumes:
+    - ./admin-backend/src:/usr/src/app/src
+  environment:
+    - DB_ENV=development
+  priviledged: true
+  links:
+    - db
+
+admin-frontend:
+  extends:
+    file: common.yml
+    service: admin-frontend
+  build: ./admin-frontend
+  command: npm run dev-start
+  volumes:
+    - ./admin-frontend/js:/usr/src/app/js
+    - ./admin-frontend/schema.json:/usr/src/app/schema.json
+    - ./admin-frontend/public:/usr/src/app/public
+  links:
+    - admin-backend

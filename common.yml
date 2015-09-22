@@ -10,3 +10,11 @@ public-backend:
 public-frontend:
   ports:
     - "3001:3001"
+
+admin-backend:
+  ports:
+    - "3002:3002"
+
+admin-frontend:
+  ports:
+    - "3003:3003"

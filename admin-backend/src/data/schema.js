@@ -24,12 +24,13 @@ if (process.env.DB_ENV !== 'graphql-schema') {
   var {
     Post, 
     getPost, 
-    getPosts, 
-    getTotalPosts, 
+    getPosts,
     hasPostsRemaining, 
     getUser, 
     User, 
-    getViewer 
+    getViewer,
+    updatePost,
+    createPost,
   } = require('./database');
 }
 
@@ -132,7 +133,10 @@ var postType = new GraphQLObjectType({
   interfaces: [nodeInterface],
 });
 
-var {connectionType: postConnection} = 
+var {
+  connectionType: postConnection,
+  edgeType: postEdge
+} = 
   connectionDefinitions({name: 'Post', nodeType: postType});
 
 function arrayUnion(arr1, arr2, equalityFunc) {
@@ -208,6 +212,78 @@ async function getPagedPosts(post, args) {
   return output;
 }
 
+var updatePostMutation = mutationWithClientMutationId({
+  name: 'UpdatePost',
+  inputFields: {
+    id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    title: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    content: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    published_at: {
+      type: GraphQLString
+    }
+  },
+  outputFields: {
+    post: {
+      type: postType,
+      resolve: (payload) => payload
+    }
+  },
+  mutateAndGetPayload: (payload => {
+    var id = fromGlobalId(payload.id).id;
+    var data = {
+      title: payload.title,
+      content: payload.content,
+      published_at: payload.published_at
+    };
+    return updatePost(id, data);
+  })
+});
+
+var createPostMutation = mutationWithClientMutationId({
+  name: 'CreatePost',
+  inputFields: {
+    title: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    content: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    published_at: {
+      type: GraphQLString
+    }
+  },
+  outputFields: {
+    viewer: {
+      type: userType,
+      resolve: () => getViewer()
+    },
+    newPostEdge: {
+      type: postEdge,
+      resolve: (payload) => payload
+    }
+  },
+  mutateAndGetPayload: (payload => {
+    var data = {
+      title: payload.title,
+      content: payload.content,
+      published_at: payload.published_at
+    };
+    return createPost(data)
+      .then(createdPost => {
+        return {
+          cursor: offsetToCursor(createdPost.Post.id),
+          node: createdPost.Post
+        }
+      });
+  })
+});
+
 var queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
@@ -219,6 +295,15 @@ var queryType = new GraphQLObjectType({
   })
 });
 
+var mutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => ({
+    updatePost: updatePostMutation,
+    createPost: createPostMutation,
+  })
+});
+
 export var Schema = new GraphQLSchema({
   query: queryType,
+  mutation: mutationType
 });

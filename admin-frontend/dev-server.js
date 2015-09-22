@@ -3,7 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
-const PORT = 3001;
+const PORT = 3003;
 
 var compiler = webpack({
   entry: path.resolve(__dirname, 'js', 'app.js'),
@@ -13,16 +13,17 @@ var compiler = webpack({
         test: /\.js$/,
         loader: 'babel',
         query: { stage: 0, plugins: ['./build/babelRelayPlugin'] }
-      }
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
   output: {filename: 'app.js', path: '/'},
-  devtool: "source-map"
+  devtool: 'source-map',
 });
 
 var app = new WebpackDevServer(compiler, {
   contentBase: '/public/',
-  proxy: {'/graphql': 'http://public-backend:3000/'},
+  proxy: {'/graphql': 'http://admin-backend:3002/'},
   publicPath: '/js/',
   stats: {colors: true},
   watchOptions: {

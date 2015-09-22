@@ -1,3 +1,21 @@
+input CreatePostInput {
+  title: String!
+  content: String!
+  published_at: String
+  clientMutationId: String!
+}
+
+type CreatePostPayload {
+  viewer: User
+  newPostEdge: PostEdge
+  clientMutationId: String!
+}
+
+type Mutation {
+  updatePost(input: UpdatePostInput!): UpdatePostPayload
+  createPost(input: CreatePostInput!): CreatePostPayload
+}
+
 interface Node {
   id: ID!
 }
@@ -31,6 +49,19 @@ type PostEdge {
 type Query {
   node(id: ID!): Node
   viewer: User
+}
+
+input UpdatePostInput {
+  id: String!
+  title: String!
+  content: String!
+  published_at: String
+  clientMutationId: String!
+}
+
+type UpdatePostPayload {
+  post: Post
+  clientMutationId: String!
 }
 
 type User implements Node {
