@@ -4,7 +4,7 @@ export default class CreatePostMutation extends Relay.Mutation {
   static fragments = {
     viewer: () => Relay.QL`
       fragment on User {
-        id,
+        id
       }
     `,
   };
@@ -34,7 +34,7 @@ export default class CreatePostMutation extends Relay.Mutation {
       connectionName: 'posts',
       edgeName: 'newPostEdge',
       rangeBehaviors: {
-        '': 'append'
+        '': 'prepend'
       },
     }];
   }

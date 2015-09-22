@@ -265,7 +265,12 @@ var createPostMutation = mutationWithClientMutationId({
     },
     newPostEdge: {
       type: postEdge,
-      resolve: (payload) => payload
+      resolve: (newPost) => {
+        return {
+          cursor: offsetToCursor(newPost.id),
+          node: newPost
+        }
+      }
     }
   },
   mutateAndGetPayload: (payload => {
@@ -274,13 +279,7 @@ var createPostMutation = mutationWithClientMutationId({
       content: payload.content,
       published_at: payload.published_at
     };
-    return createPost(data)
-      .then(createdPost => {
-        return {
-          cursor: offsetToCursor(createdPost.Post.id),
-          node: createdPost.Post
-        }
-      });
+    return createPost(data);
   })
 });
 
