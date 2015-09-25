@@ -11,9 +11,21 @@ type CreatePostPayload {
   clientMutationId: String!
 }
 
+input DeletePostInput {
+  postId: String!
+  clientMutationId: String!
+}
+
+type DeletePostPayload {
+  viewer: User
+  deletedPostId: String
+  clientMutationId: String!
+}
+
 type Mutation {
   updatePost(input: UpdatePostInput!): UpdatePostPayload
   createPost(input: CreatePostInput!): CreatePostPayload
+  deletePost(input: DeletePostInput!): DeletePostPayload
 }
 
 interface Node {

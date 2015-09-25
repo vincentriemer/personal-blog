@@ -63,6 +63,13 @@ let PostModel = bookshelf.Model.extend({
     return new PostModel(data)
       .save()
       .then(postJSONToObject);
+  },
+  delete(id) {
+    return new PostModel({id: id})
+      .delete()
+      .then((model) => {
+        return model.toJSON().id;
+      });
   }
 });
 
@@ -76,5 +83,6 @@ module.exports = {
   getPosts: PostModel.list,
   hasPostsRemaining: PostModel.hasRemaining,
   updatePost: PostModel.update,
-  createPost: PostModel.create
+  createPost: PostModel.create,
+  deletePost: PostModel.delete,
 };

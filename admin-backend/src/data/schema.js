@@ -31,6 +31,7 @@ if (process.env.DB_ENV !== 'graphql-schema') {
     getViewer,
     updatePost,
     createPost,
+    deletePost,
   } = require('./database');
 }
 
@@ -283,6 +284,28 @@ var createPostMutation = mutationWithClientMutationId({
   })
 });
 
+var deletePostMutation = mutationWithClientMutationId({
+  name: 'DeletePost',
+  inputFields: {
+    postId: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+  },
+  outputFields: {
+    viewer: {
+      type: userType,
+      resolve: getViewer,
+    },
+    deletedPostId: {
+      type: GraphQLString,
+      resolve: (id) => id,
+    }
+  },
+  mutateAndGetPayload: (({postId}) => {
+    return deletePost(fromGlobalId(postId));
+  })
+});
+
 var queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
@@ -299,6 +322,7 @@ var mutationType = new GraphQLObjectType({
   fields: () => ({
     updatePost: updatePostMutation,
     createPost: createPostMutation,
+    deletePost: deletePostMutation,
   })
 });
 
