@@ -1,13 +1,6 @@
 import Relay from 'react-relay';
 
 export default class CreatePostMutation extends Relay.Mutation {
-  static fragments = {
-    viewer: () => Relay.QL`
-      fragment on User {
-        id
-      }
-    `,
-  };
   getMutation() {
     return Relay.QL`mutation{createPost}`;
   }
@@ -15,7 +8,11 @@ export default class CreatePostMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on CreatePostPayload {
         viewer { posts },
-        newPostEdge
+        newPostEdge {
+          node {
+            id
+          }
+        }
       }
     `;
   }

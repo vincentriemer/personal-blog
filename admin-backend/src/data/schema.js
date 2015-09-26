@@ -15,6 +15,7 @@ import {
   connectionDefinitions,
   connectionFromArray,
   fromGlobalId,
+  toGlobalId,
   globalIdField,
   mutationWithClientMutationId,
   nodeDefinitions,
@@ -130,6 +131,11 @@ var postType = new GraphQLObjectType({
       type: GraphQLString,
       description: 'The date when the post was published',
     },
+    viewer: {
+      type: userType,
+      description: 'The viewer that owns this post',
+      resolve: getViewer,
+    }
   }),
   interfaces: [nodeInterface],
 });
@@ -294,15 +300,20 @@ var deletePostMutation = mutationWithClientMutationId({
   outputFields: {
     viewer: {
       type: userType,
-      resolve: getViewer,
+      resolve: () => getViewer()
     },
     deletedPostId: {
       type: GraphQLString,
-      resolve: (id) => id,
+      resolve: ({deletedPostId}) => deletedPostId,
     }
   },
   mutateAndGetPayload: (({postId}) => {
-    return deletePost(fromGlobalId(postId));
+    return deletePost(fromGlobalId(postId).id)
+      .then(id => {
+        return {
+          deletedPostId: toGlobalId('Post', id)
+        };
+      });
   })
 });
 

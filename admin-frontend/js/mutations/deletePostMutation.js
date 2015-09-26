@@ -1,7 +1,6 @@
 import Relay from 'react-relay';
 
 export default class DeletePostMutation extends Relay.Mutation {
-
   getMutation() {
     return Relay.QL`mutation{ deletePost }`;
   }
@@ -19,6 +18,10 @@ export default class DeletePostMutation extends Relay.Mutation {
     return {
       postId: this.props.postId
     }
+  }
+
+  getCollisionKey() {
+    return `delete_${this.props.postId}`;
   }
 
   getConfigs() {

@@ -66,10 +66,8 @@ let PostModel = bookshelf.Model.extend({
   },
   delete(id) {
     return new PostModel({id: id})
-      .delete()
-      .then((model) => {
-        return model.toJSON().id;
-      });
+      .destroy()
+      .then(() => id);
   }
 });
 

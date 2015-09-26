@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import Post from './post';
 import UpdatePostMutation from '../mutations/updatePostMutation';
+import DeletePostMutation from '../mutations/deletePostMutation';
 
 class UpdatePost extends Post {
   constructor(props) {
@@ -23,26 +24,9 @@ class UpdatePost extends Post {
       title: post.title,
       content: post.content,
       published: !!post.published_at,
-      published_at: publishedDate
+      published_at: publishedDate,
+      viewerId: post.viewer.id,
     }
-  }
-  componentWillReceiveProps(nextProps) {
-    var {post} = nextProps;
-
-    var publishedDate;
-    if (!!post.published_at) {
-      publishedDate = moment(post.published_at);
-    } else {
-      publishedDate = moment();
-    }
-
-    this.setState({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      published: !!post.published_at,
-      published_at: publishedDate
-    });
   }
   handleSave = () => {
     Relay.Store.update(new UpdatePostMutation({
@@ -52,11 +36,17 @@ class UpdatePost extends Post {
         published_at: this.state.published ? this.state.published_at.format() : null
     }));
   }
+  handleDelete = () => {
+    Relay.Store.update(new DeletePostMutation({
+      postId: this.state.id,
+      viewerId: this.state.viewerId
+    }), {
+      onSuccess: () => {
+        this.context.history.pushState(null, '/');
+      }
+    });
+  }
 }
-
-UpdatePost.propTypes = {
-  post: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(UpdatePost, {
   fragments: {
@@ -66,7 +56,9 @@ export default Relay.createContainer(UpdatePost, {
         title,
         content,
         published_at,
-        ${UpdatePostMutation.getFragment('post')}
+        viewer {
+          id,
+        }
       }
     `,
   }

@@ -42,7 +42,11 @@ export default class Post extends React.Component {
   }
 
   render() {
-    var publishDateComponent;
+    var publishDateComponent, deleteButton;
+
+    if (this.state.id) {
+      deleteButton = <button onClick={this.handleDelete} style={{marginTop: 30, fontSize: '13px'}}>Delete</button>;
+    }
 
     if (this.state.published) {
       publishDateComponent = (
@@ -68,6 +72,7 @@ export default class Post extends React.Component {
         </h4>
         {publishDateComponent}
         <button onClick={this.handleSave} style={{marginTop: 30, fontSize: '13px'}}>Save</button>
+        {deleteButton}
         <div style={{marginTop: 30}}>
           <Link to="/">Back</Link>
         </div>
@@ -77,5 +82,6 @@ export default class Post extends React.Component {
 }
 
 Post.contextTypes = {
-  history: React.PropTypes.object
+  history: React.PropTypes.object,
+  route: React.PropTypes.object
 }

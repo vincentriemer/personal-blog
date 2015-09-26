@@ -34,15 +34,4 @@ export default class UpdatePostMutation extends Relay.Mutation {
   getCollisionKey() {
     return `update_${this.props.id}`;
   }
-
-  static fragments = {
-    post: () => Relay.QL`
-      fragment on Post {
-        id,
-        title,
-        content,
-        published_at
-      }
-    `,
-  };
 }

@@ -46,6 +46,7 @@ type Post implements Node {
   title: String
   content: String
   published_at: String
+  viewer: User
 }
 
 type PostConnection {
