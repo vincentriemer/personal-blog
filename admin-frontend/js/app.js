@@ -7,6 +7,7 @@ import {Router, Route, IndexRoute} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import App from './components/app';
+import PostList from './components/post-list';
 import UpdatePost from './components/update-post';
 import CreatePost from './components/create-post';
 import ReactRouterRelay from 'react-router-relay';
@@ -31,22 +32,21 @@ ReactDOM.render(
   <Router
     history={createBrowserHistory()}
     createElement={ReactRouterRelay.createElement}>
-    <Route>
-      <Route
-        name="home"
-        path="/"
-        component={App}
+    <Route
+      path="/"
+      component={App}
+    >
+      <IndexRoute
+        component={PostList}
         queries={HomeQueries}
       />
       <Route
-        name="udpate-post"
-        path="/post/:id"
+        path="post/:id"
         component={UpdatePost}
         queries={PostQueries}
       />
       <Route
-        name="create-post"
-        path="/new"
+        path="new"
         component={CreatePost}
         queries={HomeQueries}
       />

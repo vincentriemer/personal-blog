@@ -2,12 +2,9 @@ import 'react-date-picker/base.css';
 import 'react-date-picker/theme/hackerone.css';
 
 import React from 'react';
-import Relay from 'react-relay';
 import {Link} from 'react-router';
 import DatePicker from 'react-date-picker';
 import moment from 'moment';
-
-import CreatePostMutation from '../mutations/createPostMutation';
 
 export default class Post extends React.Component {
   constructor(props) {

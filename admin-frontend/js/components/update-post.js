@@ -2,7 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import moment from 'moment';
 
-import Post from './post';
+import Post from './shared/post';
 import UpdatePostMutation from '../mutations/updatePostMutation';
 import DeletePostMutation from '../mutations/deletePostMutation';
 

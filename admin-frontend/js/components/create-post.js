@@ -2,7 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import moment from 'moment';
 
-import Post from './post';
+import Post from './shared/post';
 import CreatePostMutation from '../mutations/createPostMutation';
 
 export default class CreatePost extends Post {
