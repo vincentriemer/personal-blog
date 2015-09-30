@@ -2,7 +2,9 @@ import React from 'react';
 import Relay from 'react-relay';
 import {Link} from 'react-router';
 import IndexLink from 'react-router/lib/IndexLink';
+import Radium from 'radium';
 
+@Radium
 class NavElement extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
@@ -14,7 +16,7 @@ class NavElement extends React.Component {
     return (
       <li style={styles.navigationElementWrapper}>
         <this.props.linkType
-          style={styles.navigationLink} 
+          style={styles.navigationLink}
           to={this.props.to}
           activeStyle={styles.navigationLinkActive}
           >
@@ -25,6 +27,7 @@ class NavElement extends React.Component {
   }
 }
 
+@Radium
 export default class App extends React.Component {
   render() {
     return (
@@ -91,16 +94,15 @@ var styles = {
     textDecoration: 'none',
     fontFamily: 'Avenir Next, sans-serif',
     color: '#888',
-    fontWeight: 500,
+    fontWeight: 500
   },
   navigationLinkActive: {
-    color: '#333'
+    color: '#333',
+    cursor: 'default',
   },
   childrenWrapper: {
     flexGrow: 1,
     overflowY: 'scroll',
   }
 };
-
-
 

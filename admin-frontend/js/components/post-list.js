@@ -1,8 +1,24 @@
 import React from 'react';
 import Relay from 'react-relay';
 import {Link} from 'react-router';
+import Radium from 'radium';
 
+import TitleBar from './shared/title-bar';
+import Button from './shared/button';
+
+var styles = {
+  contentWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+  }
+};
+
+@Radium
 class App extends React.Component {
+  static contextTypes = {
+    history: React.PropTypes.object,
+  }
+
   render() {
     var currentNumber = this.props.relay.variables.first;
     var buttonStyle = {};
@@ -11,8 +27,14 @@ class App extends React.Component {
       buttonStyle.display = 'none';
     }
     return (
-        <div>
-          <h1>Admin Post List</h1>
+        <div style={styles.contentWrapper}>
+          <TitleBar title='Post List'>
+            <Button 
+              disabled={false} 
+              label='Create a New Post'
+              onClick={() => this.context.history.pushState(null, '/new')}
+            />
+          </TitleBar>
           <ul>
             {this.props.viewer.posts.edges.map(edge =>
               <li key={edge.node.id}>
