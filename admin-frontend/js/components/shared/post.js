@@ -71,7 +71,7 @@ export default class Post extends React.Component {
         <button onClick={this.handleSave} style={{marginTop: 30, fontSize: '13px'}}>Save</button>
         {deleteButton}
         <div style={{marginTop: 30}}>
-          <Link to="/">Back</Link>
+          <Link to="/">Home</Link>
         </div>
       </div>
     );

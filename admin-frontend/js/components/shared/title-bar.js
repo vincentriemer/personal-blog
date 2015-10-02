@@ -10,6 +10,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexShrink: 0,
   },
   titleElement: {
     marginRight: 15,

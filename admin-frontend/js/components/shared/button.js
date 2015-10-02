@@ -11,8 +11,7 @@ const themes = {
       fontSize: 14,
       borderRadius: 3,
       transform: 'scale(1.0)',
-      marginLeft: 15,
-      marginRight: 15,
+      marginRight: 10,
     },
     disabledStyle: {
       opacity: 0.4,

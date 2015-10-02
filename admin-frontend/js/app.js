@@ -3,13 +3,14 @@ import 'babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
-import {Router, Route, IndexRoute} from 'react-router';
+import {Router, Route, IndexRoute, Redirect} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import App from './components/app';
 import PostList from './components/post-list';
 import UpdatePost from './components/update-post';
 import CreatePost from './components/create-post';
+import PostListPreview from './components/post-list-preview';
 import ReactRouterRelay from 'react-router-relay';
 
 var HomeQueries = {
@@ -32,24 +33,28 @@ ReactDOM.render(
   <Router
     history={createBrowserHistory()}
     createElement={ReactRouterRelay.createElement}>
-    <Route
-      path="/"
-      component={App}
-    >
-      <IndexRoute
-        component={PostList}
-        queries={HomeQueries}
-      />
+    <Route component={App}>
       <Route
-        path="post/:id"
+        path="/posts"
+        component={PostList}
+        queries={HomeQueries}>
+        <Route
+          path=":id"
+          component={PostListPreview}
+          queries={PostQueries}
+        />
+      </Route>
+      <Route
+        path="/edit/:id"
         component={UpdatePost}
         queries={PostQueries}
       />
       <Route
-        path="new"
+        path="/new"
         component={CreatePost}
         queries={HomeQueries}
       />
+      <Redirect from="/" to="/posts" />
     </Route>
   </Router>,
   document.getElementById('root')

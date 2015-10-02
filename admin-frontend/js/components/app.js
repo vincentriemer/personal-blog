@@ -39,7 +39,7 @@ export default class App extends React.Component {
           <nav style={styles.navigationWrapper}>
             <ul>
               <NavElement to='/new' title='New Post' linkType={Link} />
-              <NavElement to='/' title='Content' linkType={IndexLink} />
+              <NavElement to='/posts' title='Posts' linkType={Link} />
             </ul>
           </nav>
         </div>
@@ -101,8 +101,8 @@ var styles = {
     cursor: 'default',
   },
   childrenWrapper: {
+    display: 'flex',
     flexGrow: 1,
-    overflowY: 'scroll',
   }
 };
 
