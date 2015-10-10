@@ -7,11 +7,10 @@ const themes = {
     style: {
       backgroundColor: '#45879E',
       color: '#FFF',
-      fontFamily: 'Avenir Next, sans-serif',
-      fontSize: 14,
       borderRadius: 3,
       transform: 'scale(1.0)',
       marginRight: 10,
+      fontSize: '0.9rem'
     },
     disabledStyle: {
       opacity: 0.4,

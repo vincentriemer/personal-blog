@@ -42,7 +42,7 @@ export default class Post extends React.Component {
     var publishDateComponent, deleteButton;
 
     if (this.state.id) {
-      deleteButton = <button onClick={this.handleDelete} style={{marginTop: 30, fontSize: '13px'}}>Delete</button>;
+      deleteButton = <button onClick={this.handleDelete} style={{marginTop: 30}}>Delete</button>;
     }
 
     if (this.state.published) {
@@ -58,7 +58,7 @@ export default class Post extends React.Component {
     }
 
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <h4>Title: 
           <input onChange={this.updateTitle} style={{width: '66%', marginLeft: 15}} value={this.state.title}/>
         </h4>
@@ -68,7 +68,7 @@ export default class Post extends React.Component {
           <input onChange={this.updatePublished} type='checkbox' checked={this.state.published}/>
         </h4>
         {publishDateComponent}
-        <button onClick={this.handleSave} style={{marginTop: 30, fontSize: '13px'}}>Save</button>
+        <button onClick={this.handleSave} style={{marginTop: 30}}>Save</button>
         {deleteButton}
         <div style={{marginTop: 30}}>
           <Link to="/">Home</Link>

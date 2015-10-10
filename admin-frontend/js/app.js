@@ -13,6 +13,8 @@ import CreatePost from './components/create-post';
 import PostListPreview from './components/post-list-preview';
 import ReactRouterRelay from 'react-router-relay';
 
+require('../sass/style.scss');
+
 var HomeQueries = {
   viewer: (Component) => Relay.QL`
     query {

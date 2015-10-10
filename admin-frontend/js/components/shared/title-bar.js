@@ -17,8 +17,6 @@ const styles = {
     marginLeft: 15,
   },
   title: {
-    fontFamily: 'Avenir Next, sans-serif',
-    fontSize: '20px',
   }
 };
 

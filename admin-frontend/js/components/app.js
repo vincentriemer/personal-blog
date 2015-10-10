@@ -67,18 +67,17 @@ var styles = {
     flexDirection: 'column',
     alignItems: 'stretch',
     borderRight: '1px solid #aaa',
+    flexShrink: 0,
   },
   headerWrapper: {
     height: 60,
     paddingLeft: 15,
   },
   header: {
-    fontFamily: 'Avenir Next, sans-serif',
-    fontSize: '24px',
-    fontWeight: 'bold',
     width: '100%',
     height: '100%',
     lineHeight: '60px',
+    fontWeight: 'bold',
   },
   navigationWrapper: {
     flexGrow: 1,
@@ -92,9 +91,8 @@ var styles = {
     height: '100%',
     lineHeight: '30px',
     textDecoration: 'none',
-    fontFamily: 'Avenir Next, sans-serif',
     color: '#888',
-    fontWeight: 500
+    fontSize: '0.9rem'
   },
   navigationLinkActive: {
     color: '#333',

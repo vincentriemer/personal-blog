@@ -18,17 +18,22 @@ var styles = {
     flexDirection: 'row',
     height: '100%',
     overflowY: 'hidden',
+    alignItems: 'strecth',
   },
   listWrapper: {
     display: 'flex',
     flexDirection: 'column',
     width: 400,
     overflowY: 'scroll',
-    borderRight: '1px solid #999'
+    borderRight: '1px solid #999',
+    flexShrink: 0,
   },
   previewWrapper: {
     flexGrow: 1,
     backgroundColor: '#999',
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'hidden',
   }
 };
 
@@ -46,16 +51,11 @@ const listElementStyles = {
     // borderBottom: '1px solid #ddd'
   },
   title: {
-    fontFamily: 'Avenir Next, sans-serif',
-    fontSize: '20px',
-    fontWeight: 500,
     marginRight: 15,
     color: '#999',
   },
   icon: {
     color: '#fff',
-    fontFamily: 'Avenir Next, sans-serif',
-    fontSize: '20px',
   }
 };
 
@@ -104,7 +104,6 @@ class PostListElement extends React.Component {
           <h1 style={[listElementStyles.title, hoverStyle, activeStyle]}>
             {this.props.postTitle}
           </h1>
-          <i style={[listElementStyles.icon, hoverStyle, activeStyle]}>></i>
       </div>
     );
   }

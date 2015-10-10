@@ -1,4 +1,4 @@
-FROM node:4.0
+FROM node:4
 
 RUN npm install -g babel knex forever@v0.14.2
 

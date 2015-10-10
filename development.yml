@@ -58,5 +58,6 @@ admin-frontend:
     - ./admin-frontend/js:/usr/src/app/js
     - ./admin-frontend/schema.json:/usr/src/app/schema.json
     - ./admin-frontend/public:/usr/src/app/public
+    - ./admin-frontend/sass:/usr/src/app/sass
   links:
     - admin-backend
