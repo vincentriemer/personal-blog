@@ -62,7 +62,10 @@ class PostListPreivew extends React.Component {
         </TitleBar>
         <div style={styles.previewWrapper}>
           <div style={styles.preview} id="baseline" className="typeset section">
-            <h1>{post.title}</h1>
+            <div>
+              <h1 style={{letterSpacing: '-0.025em'}}>{post.title}</h1>
+              <p className="caption">by Vincent Riemer</p>
+            </div>
             {MTRC(post.content).tree}
           </div>
         </div>

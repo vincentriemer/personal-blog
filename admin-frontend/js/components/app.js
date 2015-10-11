@@ -86,6 +86,7 @@ var styles = {
   },
   navigationElementWrapper: {
     height: 30,
+    listStyle: 'none',
   },
   navigationLink: {
     height: '100%',

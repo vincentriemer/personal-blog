@@ -9,12 +9,11 @@ html {
   @include rootsize;
 }
 
-// // Site-wide base styles.
+// Site-wide base styles.
 body {
   font-family: unquote(map-get($headingtype, font-family));
   font-style: normal;
   font-weight: map-get($headingtype, regular);
-  // line-height: 2rem;
 
   color: $bodyColour;
 
@@ -40,11 +39,10 @@ a {
 
 // Styles for typeset text.
 .typeset {
-  
   font-family: unquote(map-get($bodytype, font-family));
   font-style: normal;
   font-weight: map-get($bodytype, regular);
-  // line-height: 2rem;
+  line-height: 2rem;
 
   color: $bodyColour;
 
@@ -106,6 +104,7 @@ a {
     font-family: unquote(map-get($headingtype, font-family));
     font-style: normal;
     font-weight: map-get($headingtype, bold);
+    letter-spacing: -0.025em;
   }
 
   // Heading level 1.
@@ -140,7 +139,8 @@ a {
 
   // Lists.
   ul, ol {
-    @include baseline(zeta, $bodytype, 2, 0, all);
+    @include baseline(zeta, $bodytype, 2, 2, all);
+
     li {
       -webkit-font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
       -moz-font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
@@ -153,10 +153,89 @@ a {
       @include breakpoint(break-1) {
         margin-left: 0;
       }
-    }
 
-    & + * {
-      margin-top: 2rem;
+      ol, ul {
+        padding-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+      }
+    }
+  }
+
+  // Ordered lists.
+  ol {
+    list-style-type: none;
+
+    li {
+      counter-increment: top-level;
+      position: relative;
+
+      &:before {
+        -webkit-font-feature-settings: 'lnum' 1, 'tnum' 1;
+        -moz-font-feature-settings: 'lnum' 1, 'tnum' 1;
+        -ms-font-feature-settings: 'lnum' 1, 'tnum' 1;
+        -o-font-feature-settings: 'lnum' 1, 'tnum' 1;
+        font-feature-settings: 'lnum' 1, 'tnum' 1;
+
+        content: counter(top-level) '.';
+        margin-left: -3rem;
+        position: absolute;
+        text-align: right;
+        width: 2em;
+      }
+
+      ul {
+
+        li {
+
+          &:before {
+            content: '';
+          }
+
+          ol {
+
+            li {
+              counter-increment: alt-level;
+
+              &:before {
+                content: counter(alt-level) '.';
+              }
+            }
+          }
+        }
+      }
+
+      ol {
+
+        li {
+          counter-increment: sub-level;
+
+          &:before {
+            content: counter(top-level) '.' counter(sub-level);
+          }
+
+          ul {
+
+            li {
+
+              &:before {
+                content: '';
+              }
+            }
+          }
+
+          ol {
+
+            li {
+              counter-increment: sub-sub-level;
+
+              &:before {
+                content: counter(top-level) '.' counter(sub-level) '.' counter(sub-sub-level);
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -176,7 +255,7 @@ a {
     font-style: normal;
     font-weight: map-get($headingtype, regular);
 
-    @include fontsize(theta, all);
+    @include fontsize(zeta, all);
   }
 
   small {
@@ -186,7 +265,7 @@ a {
   .caption {
     color: $captionColour;
 
-    @include baseline(theta, $headingtype, 2, 0, all);
+    @include baseline(zeta, $headingtype, 2, 2, all);
   }
 
   // Nice spacing for captions.
@@ -335,6 +414,16 @@ a {
   }
 
   img {
+    -ms-interpolation-mode: bicubic;
+
+    height: auto;
+    vertical-align: middle;
     width: 100%;
+
+    @include breakpoint(break-1) {
+      margin: 0 auto;
+      max-width: 100%;
+      width: auto;
+    }
   }
 }
