@@ -24,7 +24,6 @@ MTRC.configure({
 
 const styles = {
   wrapper: {
-    backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
@@ -32,7 +31,6 @@ const styles = {
     alignItems: 'stretch',
   },
   previewWrapper: {
-    backgroundColor: '#fff',
     flexGrow: 1,
     overflowY: 'scroll',
   },
@@ -63,7 +61,7 @@ class PostListPreivew extends React.Component {
         <div style={styles.previewWrapper}>
           <div style={styles.preview} id="baseline" className="typeset section">
             <div>
-              <h1 style={{letterSpacing: '-0.025em'}}>{post.title}</h1>
+              <h1>{post.title}</h1>
               <p className="caption">by Vincent Riemer</p>
             </div>
             {MTRC(post.content).tree}

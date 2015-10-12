@@ -30,7 +30,6 @@ var styles = {
   },
   previewWrapper: {
     flexGrow: 1,
-    backgroundColor: '#999',
     display: 'flex',
     flexDirection: 'column',
     overflowY: 'hidden',
@@ -54,9 +53,6 @@ const listElementStyles = {
     marginRight: 15,
     color: '#999',
   },
-  icon: {
-    color: '#fff',
-  }
 };
 
 @Radium

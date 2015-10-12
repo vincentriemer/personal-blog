@@ -53,7 +53,6 @@ export default class App extends React.Component {
 
 var styles = {
   app: {
-    backgroundColor: '#fff',
     width: '100%',
     height: '100%',
     display: 'flex',

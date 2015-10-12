@@ -16,6 +16,7 @@ body {
   font-weight: map-get($headingtype, regular);
 
   color: $bodyColour;
+  background-color: $backgroundColour;
 
   @include fontsize(zeta, all);
 }
@@ -45,6 +46,7 @@ a {
   line-height: 2rem;
 
   color: $bodyColour;
+  background-color: $backgroundColour;
 
   // Nice underlines for text links.
   p a, li a, aside a {
