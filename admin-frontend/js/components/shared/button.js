@@ -10,7 +10,7 @@ const themes = {
       borderRadius: 3,
       transform: 'scale(1.0)',
       marginRight: 10,
-      fontSize: '0.9rem'
+      fontSize: '0.85rem'
     },
     disabledStyle: {
       opacity: 0.4,

@@ -1,10 +1,60 @@
-import 'react-date-picker/base.css';
-import 'react-date-picker/theme/hackerone.css';
-
 import React from 'react';
 import {Link} from 'react-router';
 import DatePicker from 'react-date-picker';
 import moment from 'moment';
+
+import Button from './button';
+import TitleBar from './title-bar';
+import PostRenderer from './post-renderer';
+import PostEditor from './post-editor';
+
+const styles = {
+  wrapper: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    overflowY: 'hidden',
+  },
+
+  titleEditor: {
+    border: 0,
+    fontSize: '100%',
+    width: '100%',
+    cursor: 'text',
+    color: '#777',
+    backgroundColor: 'transparent',
+    ':hover': {
+      color: 'inherit',
+    },
+    ':active': {
+      color: 'inherit',
+    },
+    ':focus': {
+      color: 'inherit',
+      outline: 'none',
+    }
+  },
+
+  editorAndPreviewWrapper: {
+    flexGrow: 1,
+    display: 'flex',
+    overflowY: 'hidden',
+    alignItems: 'stretch',
+    height: '100%'
+  },
+
+  editorWrapper: {
+    width: '50%',
+    display: 'flex',
+  },
+
+  previewWrapper: {
+    borderLeft: '1px solid #aaa',
+    overflowY: 'scroll',
+    width: '50%',
+  },
+};
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -42,36 +92,29 @@ export default class Post extends React.Component {
     var publishDateComponent, deleteButton;
 
     if (this.state.id) {
-      deleteButton = <button onClick={this.handleDelete} style={{marginTop: 30}}>Delete</button>;
+      deleteButton = <Button onClick={this.handleDelete} label="Delete" />;
     }
 
-    if (this.state.published) {
-      publishDateComponent = (
-        <div style={{width: 300}}>
-          <h4>Published Date</h4>
-          <DatePicker
-            date={this.state.published_at}
-            onChange={this.updatePublishedDate}
-          />
-        </div>
-      );
-    }
+    let titleEditor = <input 
+      onChange={this.updateTitle} 
+      style={styles.titleEditor} 
+      value={this.state.title}
+      placeholder='Enter a title...'
+    />;
 
     return (
-      <div style={{width: '100%'}}>
-        <h4>Title: 
-          <input onChange={this.updateTitle} style={{width: '66%', marginLeft: 15}} value={this.state.title}/>
-        </h4>
-        <h4>Body:</h4>
-        <textarea onChange={this.updateBody} style={{width: '66%', height: 300}} value={this.state.content}/>
-        <h4>Published:
-          <input onChange={this.updatePublished} type='checkbox' checked={this.state.published}/>
-        </h4>
-        {publishDateComponent}
-        <button onClick={this.handleSave} style={{marginTop: 30}}>Save</button>
-        {deleteButton}
-        <div style={{marginTop: 30}}>
-          <Link to="/">Home</Link>
+      <div style={styles.wrapper}>
+        <TitleBar title={titleEditor}>
+          <Button label="Save" onClick={this.handleSave} />
+          {deleteButton}
+        </TitleBar>
+        <div style={styles.editorAndPreviewWrapper}>
+          <div style={styles.editorWrapper}>
+            <PostEditor onChange={this.updateBody} content={this.state.content} />
+          </div>
+          <div style={styles.previewWrapper}>
+            <PostRenderer title={this.state.title} caption="by Vincent Riemer" content={this.state.content} includeTitle={false} />
+          </div>
         </div>
       </div>
     );

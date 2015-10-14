@@ -15,6 +15,7 @@ const styles = {
   titleElement: {
     marginRight: 15,
     marginLeft: 15,
+    flexGrow: 1,
   },
   title: {
   }
@@ -23,7 +24,7 @@ const styles = {
 @Radium
 export default class TitleBar extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string,
+    title: React.PropTypes.node,
   }
 
   render() {

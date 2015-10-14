@@ -77,22 +77,22 @@ a {
 
     @include baseline($fontsize: zeta, $font: $bodytype, $lineheight: 2, $below: 0, $breakpoint: all);
 
-    text-indent: 2rem;
-
-    @include breakpoint(break-2) {
-      text-indent: 3rem;
-    }
+    text-indent: 0rem;
     text-align: justify;
 
     // add some space when an element which is not a paragraph is following a paragraph
     & + *:not(p), & + aside + *:not(p) {
       margin-top: 2rem;
     }
-  }
 
-  *:not(p) + p {
-    text-indent: 0rem;
-  } 
+    & + p {
+      text-indent: 2rem;
+
+      @include breakpoint(break-2) {
+        text-indent: 3rem;
+      }
+    }
+  }
 
   // Headings. OpenType ligatures, discretionary ligatures and lining figures enabled if available.
   h1, h2, h3, h4, h5, h6 {
@@ -355,13 +355,22 @@ a {
     @include fontsize(theta, all);
 
     & + * {
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
 
     code {
       @include fontsize(theta, all);
       @include baseline(theta, $monospacetype, 0, 0, all);
     }
+  }
+
+  .code {
+    text-align: left;
+    @include fontsize(eta, all);
+    @include baseline(eta, $monospacetype, 0, 0, all);
+    font-family: unquote(map-get($monospacetype, font-family));
+    line-height: 1rem;
+    white-space: pre-wrap;
   }
 
   code {

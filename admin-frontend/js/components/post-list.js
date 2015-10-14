@@ -18,7 +18,7 @@ var styles = {
     flexDirection: 'row',
     height: '100%',
     overflowY: 'hidden',
-    alignItems: 'strecth',
+    alignItems: 'stretch',
   },
   listWrapper: {
     display: 'flex',
